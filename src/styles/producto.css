@@ -1,0 +1,100 @@
+/* ========== FICHA DE PRODUCTO — estilo rojo y explicado línea a línea ========== */
+
+.producto { 
+  display: grid;                                 /* Usamos CSS Grid para organizar imagen e info en columnas. */
+  grid-template-columns: 1fr 1.1fr;              /* Dos columnas: la derecha ligeramente más ancha (1.1). */
+  gap: 24px;                                     /* Separación entre columnas/filas. */
+  max-width: 1100px;                             /* Ancho máximo legible del contenido. */
+  margin: 24px auto 0;                           /* Centrado horizontal y margen superior de 24px. */
+}
+
+.producto__media {
+  border: 1px solid rgba(255, 0, 0, .25);        /* Borde rojo tenue (antes dorado). Sube el alpha para más intensidad. */
+  border-radius: 14px;                           /* Esquinas redondeadas del contenedor de imagen. */
+  overflow: hidden;                              /* Recorta desbordes de la imagen (evita esquinas cuadradas). */
+  background: rgba(255, 255, 255, .02);          /* Fondo oscuro muy sutil para diferenciar del lienzo. */
+  display: grid;                                 /* Grid para centrar contenido. */
+  place-items: center;                           /* Centra la imagen/placeholder vertical y horizontalmente. */
+}
+
+.producto__media img { 
+  width: 100%;                                   /* Imagen ocupa todo el ancho del contenedor. */
+  height: auto;                                  /* Altura proporcional (no deforma la imagen). */
+  display: block;                                /* Elimina espacios extra por inline-block. */
+}
+
+.producto__placeholder { 
+  padding: 40px 20px;                            /* Aire alrededor del texto si no hay imagen. */
+  color: var(--gold);                            /* Rojo de marca (usa tu variable global). */
+  font-weight: 800;                              /* Peso fuerte para que destaque como “logo/título”. */
+  text-align: center;                            /* Centrado horizontal del texto. */
+}
+
+.producto__info { 
+  display: grid;                                 /* Grid sencillo para apilar título, precio, opciones y CTA. */
+  gap: 12px;                                     /* Separación vertical entre bloques. */
+}
+
+.producto__title { 
+  margin: 0;                                     /* Sin margen extra alrededor del título. */
+  color: var(--gold);                            /* Rojo de marca para el título del producto. */
+  font-size: clamp(22px, 4.5vw, 36px);           /* Tamaño fluido: mínimo 22px, máximo 36px. */
+}
+
+.producto__price { 
+  margin: 0;                                     /* Sin margen extra (lo controla el gap del grid). */
+  font-weight: 800;                              /* Precio en negrita para darle jerarquía. */
+  /* tip: si quieres que el precio también sea rojo, añade: color: var(--gold); */
+}
+
+.producto__opts { 
+  display: grid;                                 /* Contenedor de bloques de opciones (color/talla/tamaño...). */
+  gap: 12px;                                     /* Separación entre cada bloque de opciones. */
+  margin-top: 4px;                               /* Un poco de aire respecto al precio. */
+}
+
+.producto__opt { 
+  display: grid;                                 /* Cada bloque: etiqueta + choices en dos filas. */
+  gap: 6px;                                      /* Separación entre la etiqueta y los botones de opción. */
+}
+
+.producto__label { 
+  opacity: .9;                                   /* Ligero atenuado de la etiqueta (menos protagonista que el valor). */
+  /* tip: cambia a color: var(--gold); si quieres llamar más la atención sobre el nombre de la opción. */
+}
+
+.producto__choices { 
+  display: flex;                                 /* Las opciones (choices) en fila. */
+  flex-wrap: wrap;                               /* Si no caben, saltan a la siguiente línea. */
+  gap: 8px;                                      /* Separación entre botones de opción. */
+}
+
+.choice { 
+  background: transparent;                       /* Fondo transparente cuando no está activa. */
+  color: var(--text);                            /* Texto claro para buena legibilidad. */
+  border: 1px solid rgba(255, 0, 0, .35);        /* Contorno rojo sutil (coherente con tu paleta). */
+  border-radius: 999px;                          /* Forma de píldora (chips). */
+  padding: 8px 12px;                             /* Área de clic cómoda. */
+  cursor: pointer;                               /* Indica que es interactivo. */
+  /* tip: añade transition para suavidad: transition: background .12s, color .12s, border-color .12s; */
+}
+
+.choice.is-active { 
+  background: linear-gradient(180deg,            /* Fondo activo con degradado de rojo → rojo oscuro. */
+              var(--gold), var(--gold-strong));
+  color: #fff;                                   /* Texto blanco para contraste máximo sobre rojo. */
+  /* tip: si prefieres texto oscuro, usa #141214 (pero puede perder contraste en algunos rojos). */
+}
+
+.producto__cta { 
+  display: flex;                                 /* Contenedor de los botones (Añadir / Seguir comprando...). */
+  gap: 10px;                                     /* Separación entre botones. */
+  margin-top: 8px;                               /* Aire respecto al bloque de opciones. */
+}
+
+/* --------- Responsivo --------- */
+@media (max-width: 860px) {
+  .producto { 
+    grid-template-columns: 1fr;                  /* En móvil: una sola columna (imagen arriba, info abajo). */
+  }
+}

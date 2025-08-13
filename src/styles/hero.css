@@ -1,0 +1,105 @@
+/* ========== HERO (portada con vídeo) — cada línea explicada ========== */
+
+.hero {                                     
+  position: relative;                  /* El contenedor se vuelve “referencia” para posicionar el vídeo y la overlay dentro. */
+  min-height: 100dvh;                  /* Alto mínimo = 100% de la ventana (usa unidades “dynamic viewport” útiles en móvil). */
+  width: 100%;                         /* Ocupa todo el ancho disponible. */
+  overflow: hidden;                    /* Recorta cualquier desbordamiento del vídeo para que no aparezcan barras. */
+  isolation: isolate;                  /* Crea un nuevo stacking context; evita que filtros/mezclas afecten a elementos fuera. */
+}
+
+.hero__video {                              
+  position: absolute;                   /* Lo posicionamos respecto al .hero (que es relative). */
+  inset: 0;                             /* Atajo para top/right/bottom/left: 0 → ocupa todo el contenedor. */
+  width: 100%;                          /* Asegura que cubre todo el ancho. */
+  height: 100%;                         /* Asegura que cubre toda la altura. */
+  object-fit: cover;                    /* “Recorta” el vídeo manteniendo proporción para llenar sin deformar. */
+  filter: saturate(.9) contrast(1.05);  /* Ajuste fino de color: menos saturación (0.9) y +5% de contraste. Sube/baja a gusto. */
+  z-index: -2;                          /* Lo pone por detrás de la overlay y del contenido. */
+}
+
+.hero__overlay {                            
+  position: absolute;                   /* Se coloca encima del vídeo y debajo del contenido. */
+  inset: 0;                             /* Cubre todo el área del hero. */
+  /* Degradado radial que oscurece el fondo para leer mejor el contenido.
+     - 60% 60% → tamaño de la elipse del degradado
+     - at 50% 45% → centro del degradado (x, y), muévelo para cambiar el “foco”
+     - los tres colores usan alpha .25 / .65 / .85 → sube/baja para más o menos oscuridad */
+  background: radial-gradient(60% 60% at 50% 45%,
+              rgba(0,0,0,.25) 0%, rgba(0,0,0,.65) 60%, rgba(0,0,0,.85) 100%);
+  z-index: -1;                          /* Por encima del vídeo (-2) pero por debajo del contenido normal (0). */
+}
+
+.hero__content {                            
+  position: relative;                   /* Capa “normal” por encima de overlay y vídeo. */
+  min-height: 100dvh;                   /* Igualamos su altura al hero para centrar verticalmente. */
+  display: grid;                        /* Usamos grid para centrar fácil. */
+  place-items: center;                  /* Centra horizontal y verticalmente el contenido. */
+  padding: clamp(16px, 3vw, 32px);      /* Margen interior fluido: mínimo 16px, máximo 32px, respondiendo al ancho. */
+}
+
+.hero__card {                                 
+  width: min(520px, 92vw);              /* La tarjeta no supera 520px; en móvil, usa hasta 92% del ancho de la ventana. */
+  padding: clamp(18px, 3vw, 26px);      /* Relleno interno fluido. Ajusta valores para tarjeta más “aireada” o compacta. */
+  border-radius: 24px;                  /* Radio de las esquinas (más alto → más redonda). */
+  border: 0; /* Borde rojo semitransparente; cambia el color/alpha para más/menos presencia. */
+  background: transparent;     /* Fondo transparente. */
+  display: flex;                        /* Apila el logo y el botón en columna. */
+  flex-direction: column;               /* Eje principal vertical. */
+  align-items: center;                  /* Centra los hijos en horizontal. */
+  gap: 18px;                            /* Espacio entre el recuadro del logo y el botón. */
+}
+
+.hero__logo {                                
+  width: 100%;                          /* El recuadro del logo ocupa el ancho de la tarjeta. */
+  aspect-ratio: 16 / 10;                /* Mantiene proporción (cámbiala si tu logo pide otra). */
+  border-radius: 18px;                  /* Redondeo del “marco” del logo. */
+  display: grid;                        /* Para centrar el <img> o el texto placeholder. */
+  place-items: center;                  /* Centrado perfecto en ambos ejes. */
+  color: var(--gold);                   /* Color del texto si usas placeholder (se ignora si usas <img>). */
+  font-size: clamp(28px, 4vw, 40px);    /* Tamaño fluido del placeholder; no afecta a <img>. */
+  font-weight: 800;                     /* Peso fuerte (branding). */
+  letter-spacing: .12em;                /* Espaciado entre letras para estética de marca. */
+  background:transparent;
+  filter: drop-shadow(0 0 70px rgb(255, 0, 0))
+          drop-shadow(0 2px 0 rgba(255,0,0,.8));
+}
+
+
+.hero__cta {                                  
+  margin-top: 8px;                      /* Separación respecto al recuadro del logo. */
+  width: min(220px, 70%);               /* Botón no supera 220px; en móvil ocupa hasta el 70% de la tarjeta. */
+  background: linear-gradient(180deg, var(--gold), var(--gold-strong)); /* Degradado dorado “marca”. */
+  color: black;                       /* Texto oscuro para buen contraste sobre el dorado. */
+  font-weight: 700;                     /* Botón contundente. */
+  border: none;                         /* Sin borde (ya lo simula el degradado + sombra). */
+  border-radius: 12px;                  /* Redondeo del botón. */
+  padding: 12px 22px;                   /* Altura y ancho internos del botón. */
+  letter-spacing: 3px;                 /* Un pelín de espaciado para elegancia. */
+  box-shadow: 0 1px 18px #ff0000; /* Sombra dorada tenue. */
+  cursor: pointer;                      /* Cursor de interacción. */
+  transition:                            /* Transiciones suaves de hover/active. */
+  transform .12s ease,
+  filter .12s ease,
+  box-shadow .12s ease;
+  font-size:medium;
+  font-family:fantasy , comic-sans-serif, sans-serif;
+}
+
+/* Estado hover: se eleva 1px, satura un poco el color y aumenta la sombra. */
+.hero__cta:hover {
+  transform: translateY(-1px);          /* Micro elevación (sensación de “clickable”). */
+  filter: saturate(1.05);               /* Golpecito de intensidad al color. */
+  box-shadow: 100px #000000; /* Sombra más profunda. */
+}
+
+/* Estado active: vuelve a su sitio (sensación de “pulsado”). */
+.hero__cta:active {
+  transform: translateY(0);             /* Sin elevación al hacer click. */
+}
+
+/* Ajustes específicos para pantallas muy pequeñas (≤480px). */
+@media (max-width: 480px) {
+  .hero__card { border-radius: 20px; }  /* Un poco menos redonda para ganar espacio utilizable. */
+  .hero__cta  { width: 100%; }          /* El botón ocupa todo el ancho de la tarjeta en móvil. */
+}

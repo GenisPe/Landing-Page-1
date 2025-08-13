@@ -1,0 +1,203 @@
+/* ===== Ajustes de layout del catálogo (variables para tocar rápido) ===== */
+:root{                                                  /* Ámbito global de variables */
+  --grid-max: 1100px;                                   /* Ancho máximo del header y del catálogo (que coincidan) */
+  --card-min: 230px;                                    /* Ancho mínimo de cada tarjeta en el grid (↓ hace tarjetas más pequeñas) */
+  --card-gap: 16px;                                     /* Separación entre tarjetas */
+  --card-media-ratio: 4/3;                              /* Ratio de la zona de imagen: 1/1 = cuadrada | 4/3 = más baja | 16/9 = aún más baja */
+}
+
+/* ===== Header de /inicio: imagen lettering + navbar superpuesto ===== */
+
+.inicio-hero{                                           /* Contenedor del header superior */
+  position: relative;                                   /* Permite posicionar el nav y el overlay dentro */
+  max-width: var(--grid-max);                           /* Alineado con el resto de la página (usa la misma variable) */
+  margin: 0 auto 0;                                  /* Centrado horizontal y separación inferior */
+  padding: 30px 0 0;                                    /* Deja espacio para el nav superpuesto */
+
+}
+
+.inicio-hero__overlay{                                  /* Capa oscura sutil sobre el fondo del header */
+  position: absolute;                                   /* Se posiciona respecto a .inicio-hero */
+  inset: 0;                                             /* Cubre todo el contenedor */
+  border-radius: 16px;                                  /* Esquinas suaves */
+  background: radial-gradient(                          /* Oscurece bordes y da profundidad */
+    70% 70% at 50% 30%,
+    rgba(0,0,0,.25) 0%,
+    rgba(0,0,0,.65) 60%,
+    rgba(0,0,0,.85) 100%
+  );
+  pointer-events: none;                                 /* No bloquea el click del nav ni la imagen */
+}
+
+.inicio-hero__bg{                                       /* Imagen de lettering */
+  position: relative;                                   /* Crea contexto encima del overlay */
+  display: block;                                       /* Evita espacios de inline elements */
+  margin: 70px auto;                                      /* Centra la imagen */
+  width: min(400px, 92vw);                              /* Limita el ancho, pero responde en móvil */
+  height: clamp(0 px, 26vw, 260px);                    /* Alto fluido; ajusta si tu lettering es más alto/bajo */
+  object-fit: contain;                                  /* No recorta; mantiene proporción completa del lettering */
+  z-index: 1;                                           /* Por encima del overlay, por debajo del nav */
+   filter: drop-shadow(0 0 24px rgba(255,0,0,.5))
+          drop-shadow(0 2px 0 rgba(255,0,0,.8));
+}
+
+.inicio-hero__caption{                                  /* Descripción bajo la imagen */
+  position: relative;                                   /* Se mantiene sobre el overlay */
+  z-index: 1;                                           /* Por encima del overlay */
+  max-width: 10000px;                                     /* Ancho de lectura agradable */
+  margin: 0 auto 0;                                  /* Centrado y pequeña separación superior */
+  text-align: center;                                   /* Centra el texto */
+  opacity: .95;                                         /* Ligera atenuación para suavidad */
+  padding: 50px;
+}
+
+.inicio-hero__caption p{
+  font-family: "Mozilla Headline", sans-serif;
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: .60px;
+}
+
+/* ----- Navbar superpuesto (back izq + categorías dcha) ----- */
+
+.inicio-hero__nav{                                      /* Barra superior dentro del header */
+  position: absolute;                                   /* Superpuesta sobre la imagen */
+  top: 10px; left: 12px; right: 12px;                   /* Separa de bordes */
+  display: flex; align-items: center;                   /* Alinea verticalmente los elementos */
+  gap: 12px;                                            /* Espacio entre elementos */
+  z-index: 2;                                           /* Por encima del overlay y de la imagen */
+  padding: 6px 10px;                                    /* Relleno interno */
+  background: rgba(14,14,16,.25);                       /* Fondo translúcido (cristal) */
+  border: 1px solid rgba(255,0,0,.25);                  /* Contorno rojo tenue */
+  border-radius: 12px;                                  /* Esquinas redondeadas */
+  backdrop-filter: blur(6px);                           /* Efecto de desenfoque del fondo */
+}
+
+.nav__back{                                             /* Botón “Volver a inicio (Hero)” */
+  background: transparent;                              /* Transparente para look minimal */
+  color: var(--text);                                   /* Texto claro */
+  border: 1px solid rgba(255,0,0,.35);                  /* Borde rojo suave */
+  border-radius: 10px;                                  /* Esquinas redondeadas */
+  padding: 8px 12px;                                    /* Área de clic */
+  cursor: pointer;                                      /* Interactivo */
+}
+
+.nav__spacer{ flex: 1 1 auto; }                         /* Empuja los filtros hacia la derecha */
+
+.nav__filters{                                          /* Contenedor de chips (categorías) */
+  display: none;                                        /* Oculto por defecto (móvil). Se verá como dropdown si .is-open */
+  position: absolute;                                   /* Para el dropdown en móvil */
+  top: 56px;                                            /* Aparece justo bajo el nav */
+  right: 12px;                                          /* Alineado con el borde del nav */
+  background: rgba(14,14,16,.95);                       /* Fondo sólido oscuro para el menú */
+  border: 1px solid rgba(255,0,0,.35);                  /* Contorno rojo */
+  border-radius: 12px;                                  /* Esquinas redondeadas */
+  padding: 10px;                                        /* Relleno del panel */
+  box-shadow: 0 12px 30px rgba(0,0,0,.45);              /* Sombra para separar del fondo */
+  gap: 8px;                                             /* Espacio entre chips */
+}
+.nav__filters.is-open{ display: grid; }                 /* Cuando el menú está abierto (móvil), muéstralo en grid vertical */
+
+.chip{                                                  /* Chip de categoría */
+  background: transparent;                              /* Sin fondo por defecto */
+  color: var(--text);                                   /* Texto claro */
+  border: 1.5px solid rgba(255,0,0,.55);                /* Borde rojo translúcido */
+  padding: 8px 14px;                                    /* Área de clic */
+  border-radius: 999px;                                 /* Forma “pill” */
+  cursor: pointer;                                      /* Interactivo */
+  letter-spacing: .3px;                                 /* Estética */
+  transition: transform .12s ease, border-color .12s ease, background .12s ease; /* Animaciones suaves */
+}
+.chip:hover{ transform: translateY(-1px); border-color: var(--gold-strong); } /* Hover en chip */
+.chip.is-active{ background: linear-gradient(180deg, var(--gold), var(--gold-strong)); color:#fff; } /* Chip activo */
+
+.nav__hamburger{                                        /* Botón hamburguesa (móvil) */
+  width: 40px; height: 34px;                            /* Tamaño del botón */
+  border: 1px solid rgba(255,0,0,.35);                  /* Contorno rojo */
+  border-radius: 8px;                                   /* Esquinas */
+  background: rgba(255,255,255,.02);                    /* Fondo tenue */
+  display: grid; place-items: center;                   /* Centra las barras */
+  cursor: pointer;                                      /* Interactivo */
+}
+.nav__hamburger span{                                   /* Barras de la hamburguesa */
+  display: block;                                       /* Cada barra es un bloque */
+  width: 18px; height: 2px;                             /* Dimensiones de cada barra */
+  background: #fff;                                     /* Color de las barras */
+  border-radius: 2px;                                   /* Extremos redondeados */
+  transition: transform .18s ease, opacity .18s ease;   /* Animaciones para el cambio a "X" */
+}
+.nav__hamburger span:nth-child(2){ margin: 5px 0; }     /* Separación entre la barra del medio */
+
+.nav__hamburger.is-open span:nth-child(1){ transform: translateY(7px) rotate(45deg); } /* 1ª barra → parte de la "X" */
+.nav__hamburger.is-open span:nth-child(2){ opacity: 0; }                                /* 2ª barra desaparece */
+.nav__hamburger.is-open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }/* 3ª barra → parte de la "X" */
+
+@media (min-width: 920px){                               /* En escritorio */
+  .nav__filters{
+    position: static;                                    /* Vuelve a flujo normal dentro del nav */
+    display: flex;                                       /* Se muestran en línea */
+    background: transparent;                             /* Sin panel de fondo */
+    border: none;                                        /* Sin borde en desktop */
+    box-shadow: none;                                    /* Sin sombra */
+    padding: 0;                                          /* Sin padding extra */
+  }
+  .nav__hamburger{ display: none; }                      /* Oculta la hamburguesa en escritorio */
+}
+
+/* ===== Catálogo: mismo ancho que el header ===== */
+.inicio__catalogo{                                      /* Contenedor general del grid de productos */
+  max-width: var(--grid-max);                           /* MISMO ancho que el header (coherencia visual) */
+  margin: 24px auto 0;                                  /* Centrado y separación superior */
+}
+
+/* ===== Grid de productos: columnas responsivas y tarjetas más bajitas ===== */
+.grid{
+  display: grid !important;                             /* Asegura que sea grid (por si algún estilo lo pisa) */
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
+                                                        /* Crea tantas columnas como quepan, cada card ≥ var(--card-min) */
+  gap: var(--card-gap);                                 /* Espacio entre tarjetas (usa variable) */
+  align-items: stretch;                                 /* Todas las tarjetas ocupan la altura de su fila */
+}
+@media (max-width: 980px){
+  .grid{ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } /* Más columnas en pantallas medianas */
+}
+@media (max-width: 480px){
+  .grid{ grid-template-columns: 1fr; }                  /* En móviles estrechos: una tarjeta por fila */
+}
+
+/* ===== Tarjeta: estructura estable ===== */
+.card{
+  position: relative;                                   /* Base estable (evita solapes raros) */
+  height: 100%;                                         /* Llena la celda de grid */
+  display: flex;                                        /* Columna: media + body + actions */
+  flex-direction: column;                               /* Apila verticalmente */
+}
+
+/* ===== Media: altura controlada por ratio (ajusta aquí si la ves alta) ===== */
+.card__media{
+  aspect-ratio: var(--card-media-ratio);                /* Altura de la imagen: CAMBIA a 1/1 si la quieres cuadrada */
+  width: 100%;                                          /* Ocupa todo el ancho de la tarjeta */
+  display: grid; place-items: center;                   /* Centra la imagen/placeholder */
+  background: radial-gradient(120% 100% at 50% 0%,      /* Fondo decorativo con tinte rojo leve */
+              rgba(255,0,0,.10), rgba(0,0,0,.35));
+  border-bottom: 1px solid rgba(255,0,0,.18);           /* Línea separadora inferior */
+  overflow: hidden;                                     /* Recorta la imagen dentro del contenedor */
+}
+.card__media img{
+  width: 100%; height: 100%;                            /* La imagen llena el contenedor... */
+  object-fit: cover;                                    /* ...recortando sin deformar */
+  display: block;                                       /* Sin espacios fantasma */
+}
+
+/* ===== Body y acciones: ocupan el resto y pegan botones abajo ===== */
+.card__body{
+  padding: 12px 12px 6px;                               /* Relleno del texto */
+  flex: 1 1 auto;                                       /* Deja que crezca para empujar actions al fondo */
+}
+.card__actions{
+  padding: 10px 12px 14px;                              /* Relleno inferior algo mayor */
+  display: grid;                                        /* Dos botones en columnas iguales */
+  grid-template-columns: 1fr 1fr;                       /* 50% / 50% */
+  gap: 8px;                                             /* Separación entre botones */
+  margin-top: auto;                                     /* Se mantiene abajo de la tarjeta */
+}

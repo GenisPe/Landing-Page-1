@@ -1,0 +1,157 @@
+/* ========== MINI-CARRITO (botón + panel) — estilo rojo y explicado línea a línea ========== */
+
+.cart-fab{
+  position: fixed;                          /* Fija el botón en la ventana (no se mueve al hacer scroll). */
+  bottom: 22px;                             /* Separación desde la parte inferior. */
+  right: 22px;                              /* Separación desde el lado derecho. */
+  z-index: 50;                              /* Asegura que quede por encima del contenido normal. */
+  background: linear-gradient(180deg, var(--gold), var(--gold-strong));
+                                            /* Degradado vertical usando tus variables rojas (—gold y —gold-strong). */
+  color: #fff;                              /* Texto blanco para máximo contraste sobre rojo. */
+  font-weight: 800;                         /* Peso alto: aspecto de CTA importante. */
+  border: none;                             /* Sin borde: visual más limpio, el degradado hace de “relleno”. */
+  border-radius: 999px;                     /* Forma de píldora completamente redonda. */
+  padding: 12px 18px;                       /* Tamaño del botón (alto x ancho interno). */
+  box-shadow: 0 8px 18px rgba(255, 0, 0, .35);
+                                            /* Sombra con tinte rojo (coherente con la paleta). */
+  cursor: pointer;                          /* Cursor de mano al pasar encima. */
+  letter-spacing: .3px;                     /* Ligero espaciado de letras (toque estético). */
+  transition: transform .12s ease, box-shadow .12s ease;
+                                            /* Animaciones suaves en hover/active. */
+}
+.cart-fab:hover{
+  transform: translateY(-1px);              /* Eleva 1px para sensación de “flotar”. */
+  box-shadow: 0 12px 26px rgba(255, 0, 0, .45);
+                                            /* Sombra más intensa al pasar el ratón. */
+}
+
+.cart-panel{
+  position: fixed;                          /* Panel lateral fijo a pantalla completa de alto. */
+  top: 0;                                   /* Alineado arriba. */
+  right: 0;                                 /* Pegado al borde derecho. */
+  height: 100dvh;                           /* Ocupa todo el alto visible (dinámico en móvil). */
+  width: min(420px, 92vw);                  /* Máx 420px; en móviles usa hasta el 92% del ancho. */
+  z-index: 60;                              /* Por encima del botón flotante. */
+  background: #0e0e10;                      /* Fondo del panel (casi negro). */
+  border-left: 1px solid rgba(255, 0, 0, .30);
+                                            /* Línea de borde izquierda con tinte rojo. */
+  box-shadow: -12px 0 30px rgba(0, 0, 0, .40);
+                                            /* Sombra hacia la izquierda para separar del contenido. */
+  display: flex;                            /* Layout en columna para header, body y footer. */
+  flex-direction: column;                   /* Apila verticalmente. */
+}
+
+.cart-panel__header{
+  display: flex;                            /* Fila para título y botón de cierre. */
+  align-items: center;                      /* Centrado vertical de ambos. */
+  justify-content: space-between;           /* Título a la izquierda, cerrar a la derecha. */
+  padding: 16px 16px 10px;                  /* Relleno (más pequeño abajo). */
+  border-bottom: 1px solid rgba(255, 0, 0, .20);
+                                            /* Separador inferior con tinte rojo. */
+}
+.cart-panel__header h2{
+  margin: 0;                                /* Quita margen por defecto del h2. */
+  color: var(--gold);                       /* Título en rojo de marca. */
+}
+.cart-panel__close{
+  background: transparent;                  /* Botón “X” sin fondo. */
+  border: none;                             /* Sin borde. */
+  color: var(--text);                       /* Icono/texto claro. */
+  font-size: 24px;                          /* Tamaño grande para visibilidad. */
+  cursor: pointer;                          /* Cursor de interacción. */
+}
+
+.cart-panel__body{
+  padding: 12px 12px 0;                     /* Relleno del contenido (sin padding inferior excesivo). */
+  overflow: auto;                           /* Permite scroll si hay muchos items. */
+}
+.cart-empty{
+  opacity: .8;                              /* Mensaje “carrito vacío” algo atenuado. */
+}
+
+.cart-list{
+  list-style: none;                         /* Quita viñetas. */
+  margin: 0;                                /* Resetea márgenes por defecto. */
+  padding: 0;                               /* Resetea padding por defecto. */
+  display: grid;                            /* Grid vertical simple. */
+  gap: 10px;                                /* Separación entre items. */
+}
+
+.cart-item{
+  border: 1px solid rgba(255, 0, 0, .25);   /* Borde del item con tinte rojo sutil. */
+  border-radius: 10px;                      /* Esquinas redondeadas. */
+  padding: 10px;                            /* Relleno interno. */
+  background: rgba(255, 255, 255, .02);     /* Fondo muy tenue para separar del panel. */
+  display: flex;                            /* Fila: info a la izquierda, acciones a la derecha. */
+  justify-content: space-between;           /* Distribuye extremos. */
+  gap: 10px;                                /* Aire entre info y acciones. */
+}
+.cart-item__info{
+  display: flex;                            /* Columna de líneas (nombre, variantes, precio). */
+  flex-direction: column;                   /* Apila verticalmente. */
+  gap: 4px;                                 /* Separación entre líneas. */
+}
+.cart-item__opts{
+  opacity: .8;                              /* Variantes (color/talla) más tenues que el nombre. */
+}
+.cart-item__price{
+  color: var(--gold);                       /* Precio en rojo de marca. */
+  font-weight: 700;                         /* Destácado. */
+}
+
+.cart-item__actions{
+  display: flex;                            /* Fila de botones de cantidad y eliminar. */
+  align-items: center;                      /* Centrado vertical con el contenido. */
+  gap: 8px;                                 /* Separación entre botones/contador. */
+}
+.cart-item__actions button{
+  background: transparent;                  /* Botones “-” “+” sin fondo. */
+  color: var(--text);                       /* Texto claro. */
+  border: 1px solid rgba(255, 0, 0, .35);   /* Contorno rojo sutil. */
+  border-radius: 8px;                       /* Esquinas redondeadas. */
+  padding: 6px 10px;                        /* Área de clic cómoda. */
+  cursor: pointer;                          /* Cursor de interacción. */
+}
+.cart-item__remove{
+  border-color: rgba(255, 0, 0, .20);       /* Botón “Eliminar” con borde un poco más tenue. */
+  opacity: .85;                             /* Ligera atenuación para no competir con “+/-”. */
+}
+.cart-item__qty{
+  min-width: 18px;                          /* Ancho mínimo para que los números no “bailen”. */
+  text-align: center;                       /* Centrado del número de unidades. */
+}
+
+.cart-panel__footer{
+  padding: 12px;                            /* Relleno del pie del panel. */
+  border-top: 1px solid rgba(255, 0, 0, .20);
+                                            /* Separador superior con tinte rojo. */
+  display: grid;                            /* Layout simple en dos filas: total + acciones. */
+  gap: 10px;                                /* Separación entre las filas. */
+}
+.cart-total{
+  display: flex;                            /* Fila con etiqueta “Total” y el importe. */
+  align-items: center;                      /* Centrado vertical. */
+  justify-content: space-between;           /* Extremos separados. */
+}
+.cart-actions{
+  display: flex;                            /* Fila de botones de acción. */
+  gap: 10px;                                /* Separación entre botones. */
+}
+.btn-clear{
+  background: transparent;                  /* Botón “Vaciar” sin fondo. */
+  color: var(--text);                       /* Texto claro. */
+  border: 1px solid rgba(255, 0, 0, .35);   /* Contorno rojo sutil. */
+  border-radius: 10px;                      /* Esquinas redondeadas. */
+  padding: 10px 12px;                       /* Área de clic. */
+  cursor: pointer;                          /* Cursor de interacción. */
+}
+.btn-checkout{
+  background: linear-gradient(180deg, var(--gold), var(--gold-strong));
+                                            /* Botón principal con degradado rojo. */
+  color: #fff;                              /* Texto blanco para contraste. */
+  border: none;                             /* Sin borde. */
+  border-radius: 10px;                      /* Esquinas redondeadas. */
+  padding: 10px 12px;                       /* Área de clic. */
+  font-weight: 800;                         /* Destacado (CTA). */
+  cursor: pointer;                          /* Cursor de interacción. */
+}

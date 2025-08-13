@@ -1,0 +1,55 @@
+/* ========== BASE GLOBAL (variables, reset, tipografía, botones) — explicado línea a línea ========== */
+:root {                                   /* Ámbito raíz: define variables reutilizables en toda la web. */
+  --bg: hsl(0, 0%, 0%);                          /* Fondo global (negro cálido). Mueve a un gris/negro distinto si quieres otro mood. */
+  --text: #e9e6df;                        /* Color de texto base (claro). Sube/baja brillo según contraste que busques. */
+  --gold: #ff0000;                        /* **Rojo principal de marca** (antes “gold”). Úsalo como color corporativo. */
+  --gold-strong: #210000;                 /* **Rojo muy oscuro** para degradados/hover. Más vivo: #8b0000 o #ff3b3b. */
+  --glass: rgba#000000;            /* Fondo Negro. Aumenta el alpha para menos transparencia. */
+}
+
+* {                                       /* Selector universal: aplica a todos los elementos. */
+  box-sizing: border-box;                 /* Incluye padding y borde dentro del ancho/alto declarado. Evita desbordes. */
+}
+
+html, body {                              /* Reglas básicas del documento. */
+  height: 100%;                           /* Permite secciones a pantalla completa (100vh/dvh) sin cortes. */
+}
+
+body {                                    /* Estilo base global. */
+  margin: 0;                              /* Quita margen por defecto del body (evita franjas). */
+  background: var(--bg);                  /* Aplica el fondo de marca (negro). Cambia a var(--glass) si quieres “cristal”. */
+  color: var(--text);                     /* Aplica el color de texto base (claro). */
+  font-family: system-ui, Segoe UI, Roboto, Inter, Arial, sans-serif; 
+                                          /* Pila tipográfica moderna; pon tu fuente arriba si usas una custom. */
+}
+
+/* ---------- Botones reutilizables ---------- */
+
+.btn-outline {                            /* Botón secundario: contorno rojo y fondo transparente. */
+  background: transparent;                /* Deja ver el fondo/vidrio de debajo. */
+  color: var(--text);                     /* Texto claro para buen contraste sobre fondos oscuros. */
+  border: 1.5px solid #ff0000;            /* Borde **rojo** sólido. Consejo: usa var(--gold) para centralizar el color. */
+  border-radius: 10px;                    /* Redondeo medio. Menos = look más cuadrado; más = look más “pill”. */
+  padding: 10px 12px;                     /* Altura/ancho interno. Ajusta para más compacto o más grande. */
+  cursor: pointer;                        /* Muestra cursor de interacción. */
+  letter-spacing: .3px;                   /* Espaciado sutil entre letras (toque elegante). */
+}
+
+.btn-add {                                /* Botón primario: rojo con degradado y texto blanco. */
+  width: 100%;                            /* Ocupa todo el ancho del contenedor (ideal en cards). Quita si lo quieres auto. */
+  background: linear-gradient(180deg, var(--gold), var(--gold-strong)); 
+                                          /* Degradado de rojo vivo → rojo muy oscuro. Cambia el segundo valor para otro efecto. */
+  color: #000000;                            /* Texto blanco para máximo contraste sobre rojo oscuro. */
+  font-weight: 700;                       /* Negrita: hace al CTA más contundente. */
+  border: none;                           /* Sin borde: el degradado ya da “cuerpo”. */
+  border-radius: 10px;                    /* Redondeo del botón. Ajusta a 6px/0px según estética. */
+  padding: 10px 12px;                     /* Relleno interno (alto y ancho horizontal). */
+  cursor: pointer;                        /* Cursor de interacción. */
+  transition: transform .12s ease, box-shadow .12s ease; 
+                                          /* Animaciones suaves en hover/active (baratas en rendimiento). */
+}
+
+.btn-add:hover {                          /* Estado hover del botón primario. */
+  transform: translateY(-1px);            /* Eleva 1px para sensación de “flotar”. */
+  box-shadow: 0 10px 22px #ffffff;        /* **Halo blanco**. Más natural: usa rgba(255,255,255,.25) en vez de blanco puro. */
+}                                         /* (Tenías “;;” al final: quité el segundo punto y coma para evitar warnings). */
