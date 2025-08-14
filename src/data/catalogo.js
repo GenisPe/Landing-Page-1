@@ -10,10 +10,7 @@ export const PRODUCTOS = [
     categoria: "ropa",        // Categoría (para filtros)
     precio: 45,                   // Precio base en EUR
     img: "/assets/Japo/Kimono/kimono4.webp", // Ruta a imagen (pon tu archivo si lo tienes)
-    variantes: {                  // Opciones seleccionables en la ficha
-      color: ["negra", "blanca", "roja"], // Colores disponibles
-      talla: ["adulto", "infantil"],      // Tallas disponibles
-    },
+    variantes: {}, // Sin variantes, este producto no tiene opciones seleccionables
   },
   {
     id: "Acid",
